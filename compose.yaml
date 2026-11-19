@@ -1,0 +1,13 @@
+services:
+  portfolio:
+    image: ${PORTFOLIO_IMAGE:?Set PORTFOLIO_IMAGE to the GHCR image reference}
+    restart: unless-stopped
+    networks:
+      caddy:
+        aliases:
+          - durishlabs-portfolio
+
+networks:
+  caddy:
+    external: true
+    name: ${CADDY_NETWORK:-caddy}

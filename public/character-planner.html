@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How Character Planner grew from exploring the WoW: Forever profile API into a tool for choosing what to pursue next.">
+  <meta name="theme-color" content="#141715">
+  <title>The Character Planner story | Durish Labs</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead wrap">
+    <a class="brand" href="./" aria-label="Durish Labs home"><span aria-hidden="true">DL</span> Durish Labs</a>
+    <nav aria-label="Main navigation">
+      <a href="./#projects">All projects</a>
+      <a href="https://github.com/thechainercygnus/character-planner">GitHub</a>
+    </nav>
+  </header>
+  <main class="wrap" id="main">
+    <article class="project-story">
+      <header class="story-heading">
+        <p class="category">Character Planner</p>
+        <h1>What should I chase next?</h1>
+        <p>In World of Warcraft: Forever, the answer depends on what you already wear, which items you can equip at your level, and where those items come from. Character Planner brings that information together so you can decide what to do with your next play session.</p>
+      </header>
+      <section class="story-section">
+        <h2>First, find out what the API knows</h2>
+        <div>
+          <p>The early work began with an undocumented Battle.net profile API. Some requests returned 404s, and the shape of the responses was still being worked out. The planner kept the raw responses and HTTP status codes from each sync, then used real captures to decide how to model character data. Those same snapshots made it possible to see how a character changed over time.</p>
+          <a href="https://github.com/thechainercygnus/character-planner/blob/main/docs/adr/0002-raw-snapshots-first.md">Read the original snapshot design decision</a>
+        </div>
+      </section>
+      <section class="story-section">
+        <h2>Turn a snapshot into a plan</h2>
+        <div>
+          <p>Dungeon drops gave the planner a pool of items to compare with equipped gear. Ranking upgrades by slot made it possible to recommend dungeons based on the gear a character still needed. The planner grew to account for quest rewards, rare drops, and crafted gear, and added talent planning and a look ahead at upcoming levels.</p>
+          <p>Some information still had to come from inside the game. Character Planner Export fills those gaps by capturing bags, bank contents, and quest data for the planner to import.</p>
+          <a href="./#projects">Explore the companion add-ons</a>
+        </div>
+      </section>
+      <section class="story-section">
+        <h2>Run it for yourself or your guild</h2>
+        <div>
+          <p>A self-hosted instance can sync your characters and track progress over time. Guild members can opt in to share what they still need, and guest mode gives recommendations by class and level without an account.</p>
+          <div class="actions">
+            <a class="button" href="https://character-planner.readthedocs.io/en/latest/self-hosting.html">Self-host Character Planner</a>
+            <a href="https://github.com/thechainercygnus/character-planner">View source</a>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+  <footer class="wrap">
+    <span>Durish Labs</span>
+    <a href="./#projects">All projects</a>
+  </footer>
+</body>
+</html>
