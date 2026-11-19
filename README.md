@@ -8,7 +8,16 @@ From this directory, run `python -m http.server 8080 --bind 127.0.0.1 --director
 
 ## Publish a private image
 
-Use this directory as the root of a GitHub repository so GitHub can find `.github/workflows/publish-image.yaml`. The workflow runs on pushes to `main` and can also be run manually from the Actions tab. It uses the built-in `GITHUB_TOKEN` to publish a Linux AMD64 image at `ghcr.io/<owner>/<repo>:<full-commit-sha>`. The run summary gives the exact image reference.
+Use this directory as the root of a GitHub repository so GitHub can find `.github/workflows/publish-image.yaml`. The workflow runs on pushes to `main`, on pushes of release tags beginning with `v`, and when started manually from the Actions tab. It uses the built-in `GITHUB_TOKEN` to publish a Linux AMD64 image at `ghcr.io/<owner>/<repo>:<full-commit-sha>`.
+
+For a release, create and push a stable SemVer Git tag on the commit you want to ship, for example:
+
+```sh
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+That run publishes the same image under the commit SHA, `1.0.0`, and `latest`. Branch builds publish only the commit SHA. `latest` follows the most recently published stable release, including if you manually rerun an older release. The Actions run summary lists the published image references. Set `PORTFOLIO_IMAGE` to a specific version for a predictable deploy or rollback.
 
 New GHCR packages default to private. After the first run, check that the package visibility is **Private** and that the account used by the VPS has read access. If the repository or package already exists, confirm that the workflow repository has write access under the package's Actions access settings.
 
