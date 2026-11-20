@@ -6,6 +6,18 @@
   <meta name="description" content="How Character Planner grew from exploring the WoW: Forever profile API into a tool for choosing what to pursue next.">
   <meta name="theme-color" content="#141715">
   <title>The Character Planner story | Durish Labs</title>
+  <link rel="canonical" href="https://durishlabs.com/character-planner.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Durish Labs">
+  <meta property="og:url" content="https://durishlabs.com/character-planner.html">
+  <meta property="og:title" content="What should I chase next? The Character Planner story">
+  <meta property="og:description" content="How Character Planner grew from exploring the WoW: Forever profile API into a tool for choosing what to pursue next.">
+  <meta property="og:image" content="https://durishlabs.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Character Planner’s Upgrades tab recommending gear upgrades by slot">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -39,6 +51,18 @@
           <a href="./#projects">Explore the companion add-ons</a>
         </div>
       </section>
+      <section class="story-section" id="how-its-built">
+        <h2>Built like production software</h2>
+        <div>
+          <p>Character Planner is a hobby project held to the standards I’d want at work:</p>
+          <ul>
+            <li><strong>Decisions on record.</strong> More than 60 short <a href="https://github.com/thechainercygnus/character-planner/tree/main/docs/adr">architecture decision records</a> explain why each part works the way it does.</li>
+            <li><strong>Every change checked.</strong> Each pull request runs the tests on SQLite and Postgres, type checks, browser and accessibility checks, and security scans (CodeQL, Semgrep, Trivy, secret scanning) before it can merge.</li>
+            <li><strong>Trustworthy releases.</strong> Releases are container images for amd64 and arm64, signed with Sigstore, with an SBOM and build provenance.</li>
+            <li><strong>Security in the open.</strong> It holds an <a href="https://www.bestpractices.dev/projects/16645">OpenSSF Best Practices</a> badge, and an <a href="https://github.com/thechainercygnus/character-planner/blob/main/docs/assurance-case.md">assurance case</a> sets out the threats and how the design counters them.</li>
+          </ul>
+        </div>
+      </section>
       <section class="story-section">
         <h2>Run it for yourself or your guild</h2>
         <div>
@@ -52,7 +76,7 @@
     </article>
   </main>
   <footer class="wrap">
-    <span>Durish Labs</span>
+    <span>Durish Labs · Not affiliated with or endorsed by Blizzard Entertainment.</span>
     <a href="./#projects">All projects</a>
   </footer>
 </body>

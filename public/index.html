@@ -3,9 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Durish Labs builds independent software, including add-ons, desktop tools, and developer references for World of Warcraft: Forever.">
+  <meta name="description" content="A character planner, add-ons and desktop tools for World of Warcraft: Forever, built by Bryce Jenkins like production software.">
   <meta name="theme-color" content="#141715">
-  <title>Durish Labs | Independent software projects</title>
+  <title>Durish Labs | Tools for WoW: Forever</title>
+  <link rel="canonical" href="https://durishlabs.com/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Durish Labs">
+  <meta property="og:url" content="https://durishlabs.com/">
+  <meta property="og:title" content="Durish Labs: tools for WoW: Forever">
+  <meta property="og:description" content="Character Planner, add-ons and desktop tools for World of Warcraft: Forever, built like production software.">
+  <meta property="og:image" content="https://durishlabs.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Character Planner’s Upgrades tab recommending gear upgrades by slot">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,13 +26,14 @@
     <a class="brand" href="./" aria-label="Durish Labs home"><span aria-hidden="true">DL</span> Durish Labs</a>
     <nav aria-label="Main navigation">
       <a href="#projects">Projects</a>
+      <a href="#about">About</a>
       <a href="https://github.com/thechainercygnus">GitHub</a>
     </nav>
   </header>
   <main class="wrap" id="main">
     <section class="intro" aria-labelledby="title">
-      <h1 id="title">Software by<br><em>Durish Labs.</em></h1>
-      <p>Plan your next gear upgrades with Character Planner, and explore the other tools I’m building for World of Warcraft: Forever.</p>
+      <h1 id="title">Tools for<br><em>WoW: Forever.</em></h1>
+      <p>I’m Bryce, and Durish Labs is where I build a character planner, add-ons and desktop tools for World of Warcraft: Forever. They’re made for players to use, and built like production software.</p>
       <a class="button" href="#projects">Explore projects</a>
     </section>
 
@@ -37,21 +50,21 @@
           </div>
         </div>
         <figure>
-          <img src="planner-upgrades.webp" alt="Character Planner’s Upgrades tab comparing equipped gear and recommended upgrades by slot">
+          <img src="planner-upgrades.webp" width="2400" height="1520" alt="Character Planner’s Upgrades tab comparing equipped gear and recommended upgrades by slot">
         </figure>
       </article>
       <article class="featured">
         <div class="feature-copy">
           <p class="category">Windows desktop app</p>
           <h3>Dave’s Discount Meats AddOn Manager</h3>
-          <p>Browse, install, and update WoW: Forever add-ons from public GitHub releases in one place.</p>
+          <p>Browse, install, and update WoW: Forever add-ons from public GitHub releases in one place. Named for my guild, Dave’s Discount Meats.</p>
           <div class="actions">
             <a class="button" href="https://github.com/thechainercygnus/DDMAddOnManager/releases/latest">Get the Windows installer</a>
             <a href="https://github.com/thechainercygnus/DDMAddOnManager">View source</a>
           </div>
         </div>
         <figure>
-          <img src="manager-dark.png" alt="AddOn Manager in dark mode with two add-ons selected for installation">
+          <img src="manager-dark.png" width="760" height="470" loading="lazy" decoding="async" alt="AddOn Manager in dark mode with two add-ons selected for installation">
         </figure>
       </article>
       <div class="catalog">
@@ -74,15 +87,28 @@
           <a href="https://github.com/thechainercygnus/ForeverAPIExplorer">View API Explorer source</a>
         </article>
         <article>
-          <p class="category">Developer reference</p>
+          <p class="category">Developer reference · private for now</p>
           <h3>Forever API Atlas</h3>
-          <p>Browse Lua symbols and captured API observations from WoW: Forever client snapshots.</p>
+          <p>Browse Lua symbols and captured API observations from WoW: Forever client snapshots. It isn’t public yet.</p>
         </article>
+      </div>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About</h2>
+      <div>
+        <p>I’m Bryce Jenkins. By day I’m an application administrator working towards platform engineering, after starting out in a NOC and as a sysadmin at an MSP.</p>
+        <p>These projects are where I practise building software the way I’d want it built at work: every change reviewed and tested in CI, decisions written down, releases signed. I build them with Claude Code as a pair, under rules kept in each repository, and they’re for players who actually use them.</p>
+        <p>Found a bug or want a feature? Open an issue on the project’s GitHub page.</p>
+        <div class="actions">
+          <a class="button" href="https://github.com/thechainercygnus">GitHub profile</a>
+          <a href="character-planner.html#how-its-built">How Character Planner is built</a>
+        </div>
       </div>
     </section>
   </main>
   <footer class="wrap">
-    <span>Durish Labs</span>
+    <span>Durish Labs · Not affiliated with or endorsed by Blizzard Entertainment.</span>
     <a href="https://github.com/thechainercygnus">GitHub profile</a>
   </footer>
 </body>
