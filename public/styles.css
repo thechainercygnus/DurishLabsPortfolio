@@ -112,7 +112,19 @@ footer { margin-top: 2.4rem; border-bottom: 0; }
 .story-section h2 { margin: 0; line-height: 1.2; }
 .story-section p + p, .story-section p + a { margin-top: 1rem; }
 .story-section p + a { display: inline-block; }
+.story-section ul { margin: 1rem 0 0; padding-left: 1.2rem; color: var(--muted); }
+.story-section li + li { margin-top: .6rem; }
+.story-section strong { color: var(--ink); }
+
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 1rem clamp(1.5rem, 5vw, 4rem);
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+}
+.about p { max-width: 62ch; }
+.about p + p { margin-top: 1rem; }
 
 @media (max-width: 46rem) {
-  .featured, .catalog, .story-section { grid-template-columns: minmax(0, 1fr); }
+  .featured, .catalog, .story-section, .about { grid-template-columns: minmax(0, 1fr); }
 }
