@@ -20,7 +20,6 @@ are the user's call; the README has the deploy steps.
 
 ## Rules
 
-- No outbound link to ForeverAPIAtlas: its site is private.
 - Screenshots come from the projects' own docs (Character Planner, AddOn Manager). Replace
   them from there rather than retaking them here. Keep image sizes small (WebP/JPEG).
 - Keep `sitemap.xml`, `robots.txt`, `404.html` and meta/Open Graph tags in step with page

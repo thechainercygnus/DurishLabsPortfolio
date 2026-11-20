@@ -1,6 +1,6 @@
 # Durish Labs portfolio
 
-The page content lives in `public/index.html`. It features Character Planner and the AddOn Manager alongside four other WoW: Forever projects. The API Atlas entry has no outbound link because its project documentation describes private hosting. The featured screenshots come from the Character Planner and AddOn Manager project documentation.
+The page content lives in `public/index.html`. It features Character Planner and the AddOn Manager alongside four other WoW: Forever projects. Each project links to its GitHub repository. The featured screenshots come from the Character Planner and AddOn Manager project documentation.
 
 ## Preview locally
 
