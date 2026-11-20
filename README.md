@@ -61,3 +61,8 @@ Use `reverse_proxy 127.0.0.1:8088` in the apex domain block. To update, pull the
 ### DNS and verification
 
 Point the apex A record at the VPS IPv4 address. Set an AAAA record only if the VPS also serves Caddy over IPv6. Validate and reload your existing Caddy configuration using your usual deployment command, then confirm that `https://durishlabs.com/` serves the portfolio. Caddy needs inbound access on its public HTTP and HTTPS ports for the standard automatic HTTPS setup. Existing subdomain routes can continue using their own blocks.
+
+## License
+
+The site's code is under the [MIT license](LICENSE). The screenshots show World of Warcraft names and
+artwork, which belong to Blizzard Entertainment.
