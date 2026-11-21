@@ -30,7 +30,8 @@ sites copy the tokens by hand, so when a token changes, open an issue in
 
 ## Rules
 
-- Screenshots come from the projects' own docs (Character Planner, AddOn Manager). Replace
+- Screenshots come from the projects' own repos (Character Planner's docs, AddOn Manager's docs, the
+  Forever API Atlas's `screenshots/`). Replace
   them from there rather than retaking them here. Keep image sizes small (WebP/JPEG).
 - Keep `sitemap.xml`, `robots.txt`, `404.html` and meta/Open Graph tags in step with page
   changes.

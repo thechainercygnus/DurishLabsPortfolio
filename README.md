@@ -1,6 +1,6 @@
 # Durish Labs portfolio
 
-The page content lives in `public/index.html`. It features Character Planner and the AddOn Manager alongside four other WoW: Forever projects. Each project links to its GitHub repository. The featured screenshots come from the Character Planner and AddOn Manager project documentation.
+The page content lives in `public/index.html`. It features Character Planner, the AddOn Manager and the Forever API Atlas alongside four other WoW: Forever projects. Each project links to its GitHub repository. The featured screenshots come from each project's own repository: the Character Planner's docs, the AddOn Manager's docs, and the Atlas's `screenshots/symbol-explorer.webp`.
 
 ## Preview locally
 
