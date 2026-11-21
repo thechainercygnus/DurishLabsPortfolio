@@ -15,8 +15,10 @@ Preview: `python -m http.server 8080 --bind 127.0.0.1 --directory public`, then 
 
 Check the image builds: `docker build -t portfolio-test .`
 
-Publishing: pushes to `main` and `v*` tags run `publish-image.yaml`. Tagging and deploying
-are the user's call; the README has the deploy steps.
+Publishing (`publish-image.yaml`): pull requests and pushes to `main` only build and
+smoke-test the image. Only a stable `vX.Y.Z` tag publishes, as `X.Y.Z`, `X.Y` and `latest`;
+never publish per-commit (SHA) images. The VPS deploys `latest` and pins `X.Y.Z` to hold or
+roll back. Tagging and deploying are the user's call; the README has the deploy steps.
 
 ## Rules
 

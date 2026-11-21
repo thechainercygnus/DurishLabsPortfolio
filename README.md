@@ -8,16 +8,18 @@ From this directory, run `python -m http.server 8080 --bind 127.0.0.1 --director
 
 ## Publish a private image
 
-Use this directory as the root of a GitHub repository so GitHub can find `.github/workflows/publish-image.yaml`. The workflow runs on pushes to `main`, on pushes of release tags beginning with `v`, and when started manually from the Actions tab. It uses the built-in `GITHUB_TOKEN` to publish a Linux AMD64 image at `ghcr.io/<owner>/<repo>:<full-commit-sha>`.
+Use this directory as the root of a GitHub repository so GitHub can find `.github/workflows/publish-image.yaml`. Pull requests and pushes to `main` only build and smoke-test the image; nothing is published per commit. Only a release publishes, using the built-in `GITHUB_TOKEN` to push a Linux AMD64 image to `ghcr.io/<owner>/<repo>`.
 
-For a release, create and push a stable SemVer Git tag on the commit you want to ship, for example:
+To release, merge the change to `main`, then tag the merge commit with a stable SemVer tag and push it, for example:
 
 ```sh
+git switch main
+git pull --ff-only
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
-That run publishes the same image under the commit SHA, `1.0.0`, and `latest`. Branch builds publish only the commit SHA. `latest` follows the most recently published stable release, including if you manually rerun an older release. The Actions run summary lists the published image references. Set `PORTFOLIO_IMAGE` to a specific version for a predictable deploy or rollback.
+That run publishes the image as `1.0.0`, `1.0` and `latest`, with the version and commit recorded in its OCI labels. Other tags, such as `v1.0` or `v1.0.0-rc.1`, fail the run without publishing. `latest` follows the most recently published release, including if you manually rerun an older release. The Actions run summary lists the published image references.
 
 New GHCR packages default to private. After the first run, check that the package visibility is **Private** and that the account used by the VPS has read access. If the repository or package already exists, confirm that the workflow repository has write access under the package's Actions access settings.
 
@@ -36,8 +38,8 @@ Choose the instructions that match where Caddy runs. In either case, the existin
 
 ### Caddy in Docker
 
-1. Copy `compose.yaml` to the VPS. In a `.env` file beside it, set `PORTFOLIO_IMAGE` to the image reference from the Actions run summary. If Caddy's existing user-defined Docker network is named something other than `caddy`, also set `CADDY_NETWORK` to that name.
-2. Run `docker compose up -d --pull always` from that directory. The web container joins the shared network with the alias `durishlabs-portfolio` and publishes no host port. For updates or rollbacks, set `PORTFOLIO_IMAGE` to the desired release's image reference and repeat the command.
+1. Copy `compose.yaml` to the VPS. In a `.env` file beside it, set `PORTFOLIO_IMAGE=ghcr.io/OWNER/REPO:latest`. If Caddy's existing user-defined Docker network is named something other than `caddy`, also set `CADDY_NETWORK` to that name.
+2. Run `docker compose up -d --pull always` from that directory. The web container joins the shared network with the alias `durishlabs-portfolio` and publishes no host port. To update to a new release, repeat the command; `--pull always` fetches the new `latest`. To hold a version or roll back, set `PORTFOLIO_IMAGE` to a release tag such as `ghcr.io/OWNER/REPO:1.2.3` and repeat the command; set it back to `latest` to follow releases again.
 3. Add this block to the existing Caddyfile. If it already has a block for the apex domain, incorporate the route into that block.
 
    ```caddyfile
@@ -51,12 +53,12 @@ Choose the instructions that match where Caddy runs. In either case, the existin
 Use this command in place of the Compose setup above. Adjust port 8088 if it is already in use.
 
 ```sh
-PORTFOLIO_IMAGE=ghcr.io/OWNER/REPO:FULL_COMMIT_SHA
+PORTFOLIO_IMAGE=ghcr.io/OWNER/REPO:latest
 docker pull "$PORTFOLIO_IMAGE"
 docker run -d --restart unless-stopped --name durishlabs-portfolio -p 127.0.0.1:8088:80 "$PORTFOLIO_IMAGE"
 ```
 
-Use `reverse_proxy 127.0.0.1:8088` in the apex domain block. To update, pull the new image first, then stop and remove the existing `durishlabs-portfolio` container before repeating `docker run` with the new image reference.
+Use `reverse_proxy 127.0.0.1:8088` in the apex domain block. To update, pull the new image first, then stop and remove the existing `durishlabs-portfolio` container before repeating `docker run`. To hold a version or roll back, use a release tag such as `ghcr.io/OWNER/REPO:1.2.3` in place of `latest`.
 
 ### DNS and verification
 
