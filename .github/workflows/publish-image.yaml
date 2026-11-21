@@ -1,20 +1,57 @@
+# The container image that serves durishlabs.com behind Caddy.
+# Pull requests and pushes to main build and smoke-test it. Only a release publishes it: a stable
+# vX.Y.Z tag publishes X.Y.Z, X.Y and latest to GHCR, the same scheme as the Character Planner.
+# No per-commit images. Tagging and deploying are the user's call (see the README).
 name: Publish portfolio image
 
 on:
   push:
     branches: [main]
     tags: ['v*']
+  pull_request:
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the portfolio
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Build the image
+        run: docker build --tag portfolio:ci .
+
+      # The checks that matter for the live site: it serves the page and stylesheet with the
+      # right types, sends the CSP and security headers, and missing paths get the 404 page.
+      - name: Smoke-test the container
+        shell: bash
+        run: |
+          docker run -d --name portfolio -p 127.0.0.1:8080:80 portfolio:ci
+          for i in $(seq 1 20); do curl -fs -o /dev/null http://127.0.0.1:8080/ && break; sleep 0.5; done
+          fail() { echo "::error::$1"; docker logs portfolio; exit 1; }
+          header() { curl -fsI "http://127.0.0.1:8080$1" | tr -d '\r' | grep -i "^$2:" | cut -d' ' -f2-; }
+          [[ "$(header / content-type)" == text/html* ]] || fail "index.html isn't served as HTML"
+          [[ "$(header /styles.css content-type)" == text/css* ]] || fail "styles.css isn't served as CSS"
+          [[ "$(header / content-security-policy)" == *"default-src 'none'"* ]] || fail "the Content-Security-Policy is missing"
+          [[ "$(header / x-content-type-options)" == nosniff ]] || fail "X-Content-Type-Options is missing"
+          [[ "$(header / strict-transport-security)" == max-age=* ]] || fail "Strict-Transport-Security is missing"
+          status=$(curl -s -o page.html -w '%{http_code}' http://127.0.0.1:8080/no/such/page)
+          [[ "$status" == 404 ]] && grep -q 'Page not found' page.html || fail "missing paths don't get the 404 page"
+          echo "All smoke checks passed."
+
   publish:
+    needs: build
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    runs-on: ubuntu-latest
     steps:
       - name: Check out the portfolio
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -27,20 +64,20 @@ jobs:
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           image="ghcr.io/${GITHUB_REPOSITORY,,}"
-          tags=("$GITHUB_SHA")
-          if [[ "$GITHUB_REF_TYPE" == tag ]]; then
-            if [[ ! "$GITHUB_REF_NAME" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
-              echo "::error::Use a stable SemVer Git tag such as v1.0.0."
-              exit 1
-            fi
-            tags+=("${GITHUB_REF_NAME#v}" latest)
+          if [[ ! "$GITHUB_REF_NAME" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "::error::Use a stable SemVer Git tag such as v1.0.0."
+            exit 1
           fi
-          docker build --label "org.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}" --tag "$image:$GITHUB_SHA" .
+          version="${GITHUB_REF_NAME#v}"
+          tags=("$version" "${version%.*}" latest) # 1.2.3, 1.2 and latest
+          docker build \
+            --label "org.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}" \
+            --label "org.opencontainers.image.version=${version}" \
+            --label "org.opencontainers.image.revision=${GITHUB_SHA}" \
+            --tag "$image:$version" .
           printf '%s' "$GHCR_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
           for tag in "${tags[@]}"; do
-            if [[ "$tag" != "$GITHUB_SHA" ]]; then
-              docker tag "$image:$GITHUB_SHA" "$image:$tag"
-            fi
+            [[ "$tag" == "$version" ]] || docker tag "$image:$version" "$image:$tag"
             docker push "$image:$tag"
             printf 'Published `%s:%s`\n\n' "$image" "$tag" >> "$GITHUB_STEP_SUMMARY"
           done
