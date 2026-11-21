@@ -65,8 +65,8 @@ colours) but don't redefine these.
 
   --text-sm: 0.875rem;      /* the floor: labels, tags, captions, meta. Never running text */
   --text-md: 1rem;          /* body, table cells, inputs, buttons */
-  --text-lg: 1.15rem;       /* lead paragraphs */
-  --text-xl: 1.35rem;       /* h3 */
+  --text-lg: 1.15rem;       /* lead paragraphs; h3 in panel-heavy apps */
+  --text-xl: 1.35rem;       /* h3; h2 in panel-heavy apps */
   --text-2xl: 1.75rem;      /* h2 */
   --display-sm: clamp(1.9rem, 1.2rem + 3vw, 3.4rem);  /* app page titles, featured headings */
   --display-md: clamp(3rem, 1.5rem + 6vw, 6.5rem);    /* article titles */
@@ -141,6 +141,10 @@ on `--accent-soft`: don't show item names on a selected-row fill.
 - **Display** headings (`h1`, featured `h3`) use `--font-display`, weight 400,
   `line-height` about 1–1.05 and `letter-spacing` -0.04em to -0.065em, with
   `text-wrap: balance`. Section headings (`h2`, `h3`) stay in `--font-text`, bold.
+- **Heading sizes:** on a page, `h2` is `--text-2xl` and `h3` `--text-xl`. Where most
+  headings sit inside panels (an app whose tabs and dialogs are all cards, as in the
+  Planner), they step down one: `h2` is `--text-xl` and `h3` `--text-lg`. Pick one per site
+  and use it throughout.
 - **Monospace** is for code, API names, paths and the small category labels only, never
   for prose or numbers in general. Set `font-size-adjust: from-font` on `body` so inline
   code matches the text's x-height, and size code blocks in `em` so they follow their
