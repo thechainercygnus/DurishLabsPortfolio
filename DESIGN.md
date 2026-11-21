@@ -170,7 +170,7 @@ on `--accent-soft`: don't show item names on a selected-row fill.
 
 ```html
 <header class="masthead">
-  <a class="brand" href="https://durishlabs.com/" aria-label="Durish Labs home">
+  <a class="brand" href="https://durishlabs.com/" aria-label="DL Durish Labs home">
     <span class="mark" aria-hidden="true">DL</span>
     <span class="brand-name">Durish Labs</span>
   </a>
